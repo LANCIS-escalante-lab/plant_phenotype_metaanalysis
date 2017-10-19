@@ -5,6 +5,19 @@
 #Normality of the data
 shapiro.test(x)
 
+#Outliers detection --- Cooks distance as a multivariate detection method
+mod <- lm(x ~ ., data=data)
+cooksd <- cooks.distance(mod)
+
+#Plot with cutoff line
+plot(cooksd, pch="*", cex=2, main="Influential Obs by Cooks distance")  # plot cook's distance
+abline(h = 4*mean(cooksd, na.rm=T), col="red")  # add cutoff line
+text(x=1:length(cooksd)+1, y=cooksd, labels=ifelse(cooksd>4*mean(cooksd, na.rm=T),names(cooksd),""), col="red")  # add labels
+
+#Influential observations
+influential <- as.numeric(names(cooksd)[(cooksd > 4*mean(cooksd, na.rm=T))])  # influential row numbers
+head(data[influential, ])  # influential observations
+
 #Generalized Linear Model (GLM). The family was chosen according to the distribution of each subset
 model1 <-glm(value~type, data=data, family = x)
 
@@ -18,10 +31,6 @@ model.1 <- lda(as.factor(type)~.,data=data)
 #Project data on linear discriminants
 model.1.values <- predict(model.1, data[,-1])
 
-#Outliers management
-fig <- ordiplot(model.1.values)
-identify(fig, "sites")
-
 #Test significance of each discriminant in the analysis 
 model.1.predict <- predict(model.1, data=data)
 mymodel <- cbind(data, model.1.predict)
@@ -30,7 +39,7 @@ test <- aov(mymodel$x.LD2~data$type)
 
 #Plot the results
 library(ggplot2)
-p <- qplot(data=data.frame(model.1.values$x), main = "title", x=LD1, y=LD2, colour=data$type) + stat_ellipse() + labs(x="LD1 (%)", y="LD2 (%)") + geom_point() + geom_text(aes(label=iso2), size=4)
+p <- qplot(data=data.frame(model.1.values$x), main = "tittle", x=LD1, y=LD2, colour=data$type) + stat_ellipse() + labs(x="LD1 (%)", y="LD2 (%)") + geom_point() + geom_text(aes(label=data), size=4)
 p
 p <- p + geom_hline(aes(0), size=.2) + geom_vline(aes(0), size=.2)
 p
