@@ -1,5 +1,5 @@
 #This script was used to the data analysis in the paper: 
-#“Domesticated, transgenic plants and wild relatives exhibit unintended phenotypic differences: a comparative meta-analysis of rice, canola, sunflower, pumpkin and maize. Hernández-Terán, Alejandra; Wegier, Ana; Benítez, Mariana; Lira, Rafael; and Escalante, Ana*”
+#"A comparative meta-analysis profiling reveals differences in phenotypic traits among domesticated, genetically engineered and wild plants relatives of rice, canola, maize, pumpkin and sunflower.  Hernández-Terán, Alejandra; Wegier, Ana; Benítez, Mariana; Lira, Rafael; and Escalante, Ana*”
 #*Corresponding author: aescalante@iecologia.unam.mx
 
 #Normality of the data
