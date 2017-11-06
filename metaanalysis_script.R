@@ -31,11 +31,11 @@ model.1 <- lda(as.factor(type)~.,data=data)
 #Project data on linear discriminants
 model.1.values <- predict(model.1, data[,-1])
 
-#Test significance of each discriminant in the analysis 
-model.1.predict <- predict(model.1, data=data)
-mymodel <- cbind(data, model.1.predict)
-test <- aov(mymodel$x.LD1 ~data$type)
-test <- aov(mymodel$x.LD2~data$type)
+#Multivariate Analysis of Variance (MANOVA) as follow-up test
+model <- manova(cbind(var1, var2, var2) ~ category, data = data)
+summary(model)
+#Univariate analysis for pairwise comparisons 
+summary.aov(model)
 
 #Plot the results
 library(ggplot2)
